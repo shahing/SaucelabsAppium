@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>SauceLab</groupId>
+  <artifactId>Test</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+ <name>SauceLab_Test</name>
+  
+  <dependencies>
+
+<dependency>
+<groupId>org.testng</groupId>
+<artifactId>testng</artifactId>
+<version>6.11</version>
+</dependency>
+<!-- Adding Selenium dependency -->
+<dependency>
+ <groupId>org.seleniumhq.selenium</groupId>
+ <artifactId>selenium-java</artifactId>
+ <version>3.0.1</version>
+</dependency> 
+<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		    <scope>test</scope>
+		</dependency>
+<dependency>
+		    <groupId>com.saucelabs</groupId>
+		    <artifactId>sauce_junit</artifactId>
+		    <version>2.1.20</version>
+		    <scope>test</scope>
+		</dependency>
+</dependencies>
+<build>
+<plugins>
+<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>3.5.1</version>
+			<configuration>
+				<source>${jdk.level}</source>
+				<target>${jdk.level}</target>
+				<!--<fork>true</fork>
+				<executable>C:\Program Files\Java\jdk1.8.0_121\bin\javac.exe</executable>-->
+			</configuration>
+	</plugin>
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<version>2.19.1</version>
+		<configuration>
+			<suiteXmlFiles>
+				<suiteXmlFile>testng.xml</suiteXmlFile>
+			</suiteXmlFiles>
+		</configuration>
+</plugin>
+ <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-failsafe-plugin</artifactId>
+	        <version>2.20</version>
+	        <executions>
+	          <execution>
+	            <goals>
+	              <goal>integration-test</goal>
+	              <goal>verify</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      <plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-enforcer-plugin</artifactId>
+			  <version>1.4.1</version>
+			  <executions>
+			    <execution>
+			      <id>enforce-property</id>
+			      <phase>pre-integration-test</phase>
+			      <goals>
+			        <goal>enforce</goal>
+			      </goals>
+			      <configuration>
+			        <rules>
+			          <requireProperty>
+			            <property>SAUCE_USERNAME</property>
+			            <message>You must set the SAUCE_USERNAME system property to execute these tests. You can pass it to maven using the following parameter: -DSAUCE_USERNAME=username</message>
+			            <regex>.+</regex>
+			          </requireProperty>
+			          <requireProperty>
+			            <property>SAUCE_ACCESS_KEY</property>
+			            <message>You must set the SAUCE_ACCESS_KEY system property to execute these tests. You can pass it to maven using the following parameter: -DSAUCE_ACCESS_KEY=accesskey</message>
+			            <regex>.+</regex>
+			          </requireProperty>
+			          <requireProperty>
+			            <property>APP_BASE_URL</property>
+			            <message>You must set the APP_BASE_URL system property to execute these tests. You can pass it to maven using the following parameter: -DAPP_BASE_URL=baseurl</message>
+			            <regex>.+</regex>
+			          </requireProperty>
+			          <requireProperty>
+			            <property>BUILD_TAG</property>
+			            <message>You must set the BUILD_TAG system property to execute these tests. You can pass it to maven using the following parameter: -DBUILD_TAG=buildtag</message>
+			            <regex>.+</regex>
+			          </requireProperty>
+			        </rules>
+			        <fail>true</fail>
+			      </configuration>
+			    </execution>
+			  </executions>
+			</plugin>
+</plugins>
+</build>
+</project>
